@@ -1,0 +1,734 @@
+# PROMPT REVISI DAN PENYEMPURNAAN KESELURUHAN APLIKASI LMS
+
+## PERAN DAN TUJUAN
+
+Bertindaklah sebagai **Senior Full-Stack Developer, UI/UX Designer, Database Engineer, dan AI Integration Engineer** yang bertugas melakukan audit, memperbaiki, dan menyempurnakan aplikasi Learning Management System (LMS) yang sedang dikembangkan.
+
+Saya ingin menyempurnakan aplikasi LMS yang sudah ada agar menjadi platform pembelajaran digital yang lengkap, interaktif, responsif, aman, mudah digunakan, dan memiliki fitur yang bekerja secara nyata.
+
+**Prinsip utama:**
+1. Jangan membuat ulang aplikasi dari awal jika struktur dan fitur yang sudah ada masih dapat digunakan.
+2. Jangan menghapus fitur, halaman, data, atau desain yang sudah berfungsi tanpa alasan teknis yang jelas.
+3. Pertahankan identitas visual, navigasi, warna, tipografi, komponen, dan gaya desain aplikasi saat ini, kecuali ada bagian yang memang perlu diperbaiki.
+4. Jangan hanya membuat tampilan frontend atau simulasi fitur. Setiap fitur harus terhubung dengan proses, database, dan backend yang sesuai.
+5. Jangan menggunakan data dummy sebagai pengganti data produksi pada fitur yang seharusnya berfungsi nyata.
+6. Jangan menyatakan suatu fitur sudah berhasil apabila belum benar-benar diimplementasikan dan diuji.
+7. Jika suatu fitur memerlukan konfigurasi eksternal, API, kredensial, atau layanan penyimpanan, jelaskan kebutuhan tersebut dan implementasikan integrasinya sejauh memungkinkan.
+8. Lakukan perubahan secara bertahap agar tidak merusak fungsi yang telah berjalan.
+
+## 1. AUDIT APLIKASI DAN KODE YANG SUDAH ADA
+
+Sebelum melakukan perubahan, periksa seluruh struktur proyek dan identifikasi:
+
+- Framework, bahasa pemrograman, struktur frontend, backend, dan database yang digunakan.
+- Seluruh halaman, menu, dashboard, komponen, dan alur navigasi.
+- Sistem autentikasi dan pembagian hak akses.
+- Fitur yang sudah berjalan, belum selesai, hanya berupa tampilan, mengalami error, atau belum terhubung dengan database.
+- Integrasi AI, API, penyimpanan file, notifikasi, dan layanan eksternal.
+- Masalah responsivitas, validasi, keamanan, dan konsistensi data.
+- Fitur yang memiliki fungsi serupa atau saling bertentangan.
+
+Buat daftar temuan audit secara internal, kemudian prioritaskan perbaikan berdasarkan tingkat kepentingan. Jika terdapat masalah mendasar yang menghambat pengembangan, perbaiki terlebih dahulu.
+
+Jangan berhenti pada laporan audit. **Lanjutkan dengan implementasi perbaikan secara nyata.**
+
+## 2. SISTEM LOGIN, REGISTRASI, DAN HAK AKSES
+
+Sempurnakan sistem autentikasi dengan ketentuan berikut.
+
+### 2.1 Login dan registrasi
+
+- Sediakan login menggunakan email dan kata sandi.
+- Sediakan login dan registrasi menggunakan akun Google melalui OAuth yang benar.
+- Pastikan proses login, logout, pemulihan kata sandi, dan penanganan sesi berjalan dengan baik.
+- Berikan validasi pada setiap input dan pesan kesalahan yang mudah dipahami.
+- Cegah pembuatan akun ganda berdasarkan identitas yang seharusnya unik.
+- Jangan menganggap login Google berhasil hanya karena tombolnya tersedia.
+- Jika konfigurasi OAuth belum tersedia, siapkan integrasi yang benar dan jelaskan konfigurasi yang masih diperlukan.
+
+### 2.2 Pembagian peran
+
+Terapkan setidaknya tiga peran:
+
+- **Admin:** mengelola konfigurasi dan administrasi platform sesuai kewenangannya.
+- **Guru:** mengelola kelas, materi, media ajar, tugas, kuis, nilai, dan aktivitas pembelajaran.
+- **Siswa:** mengakses kelas, materi, media ajar, tugas, kuis, kalender akademik, nilai akhir guru, dan fitur AI pembelajaran.
+
+Hak akses harus diperiksa pada backend, bukan hanya dengan menyembunyikan tombol di frontend.
+
+### 2.3 Pengelolaan akun
+
+Sediakan pengelolaan akun guru dan siswa melalui mekanisme administrasi yang sesuai, meliputi:
+
+- Melihat dan memperbarui profil.
+- Mengubah kata sandi atau melakukan pemulihan akun.
+- Mengaktifkan, menonaktifkan, atau memperbaiki status akun sesuai kewenangan.
+- Mengelola hubungan antara akun, kelas, guru, dan siswa.
+- Menangani perubahan peran secara aman.
+
+Pengelolaan akun harus terpusat dan tidak menimbulkan data pengguna ganda.
+
+## 3. DASHBOARD DAN PENGELOLAAN KELAS
+
+### 3.1 Dashboard admin
+
+Tampilkan ringkasan yang relevan, seperti:
+
+- Jumlah pengguna, guru, siswa, dan kelas.
+- Aktivitas pembelajaran.
+- Ringkasan tugas, kuis, dan pengumpulan.
+- Status sistem dan aktivitas terbaru.
+- Pengelolaan pengguna dan konfigurasi platform.
+
+Admin tidak perlu memiliki fitur khusus pembelajaran yang hanya ditujukan kepada siswa atau guru apabila fitur tersebut tidak dibutuhkan untuk tugas administrasinya.
+
+### 3.2 Dashboard guru
+
+Sediakan akses untuk:
+
+- Membuat dan mengelola kelas.
+- Mengatur siswa dan materi pembelajaran.
+- Membuat tugas, kuis, dan media ajar.
+- Memeriksa pengumpulan tugas.
+- Memberikan dan mengubah nilai.
+- Melihat perkembangan pembelajaran siswa.
+- Mengelola kalender dan agenda kelas.
+- Melihat notifikasi aktivitas yang relevan.
+
+### 3.3 Dashboard siswa
+
+Sediakan akses untuk:
+
+- Melihat kelas yang diikuti.
+- Membuka materi dan media ajar.
+- Mengerjakan tugas dan kuis.
+- Melihat tenggat waktu.
+- Mengakses kalender dan agenda.
+- Melihat progres pembelajaran.
+- Melihat nilai akhir yang ditetapkan guru.
+- Menggunakan AI Scaffolding dan chatbot pembelajaran.
+
+Setiap dashboard harus menampilkan data sesuai pengguna yang sedang login dan peran yang dimiliki.
+
+## 4. AI SCAFFOLDING DAN CHATBOT PEMBELAJARAN
+
+Fitur AI pembelajaran ditujukan **khusus untuk siswa**. Jangan menampilkan AI Scaffolding dan chatbot pembelajaran sebagai fitur utama guru atau admin.
+
+### 4.1 AI Scaffolding
+
+Kembangkan AI sebagai pendamping belajar yang membantu siswa memahami konsep secara bertahap.
+
+Kemampuan yang diharapkan:
+
+- Memberikan petunjuk sesuai tahap pemahaman siswa.
+- Memecah masalah menjadi langkah-langkah yang lebih mudah.
+- Memberikan pertanyaan pemantik agar siswa berpikir mandiri.
+- Menjelaskan konsep dengan bahasa yang sederhana.
+- Menyesuaikan penjelasan dengan materi atau topik yang sedang dipelajari.
+- Memberikan contoh tambahan jika diperlukan.
+- Mengidentifikasi kesalahan pemahaman dan mengarahkan siswa untuk memperbaikinya.
+- Tidak langsung memberikan jawaban akhir tanpa penjelasan ketika konteksnya adalah latihan belajar.
+
+Pastikan AI tidak mengarang materi, referensi, nilai, atau informasi tentang progres siswa.
+
+### 4.2 Chatbot pembelajaran
+
+Chatbot harus dapat membantu siswa:
+
+- Bertanya tentang materi.
+- Meminta penjelasan ulang.
+- Meminta contoh soal.
+- Mendapatkan petunjuk pengerjaan.
+- Memahami kesalahan pada jawaban.
+- Melanjutkan percakapan dengan konteks yang relevan.
+
+Jika memungkinkan, hubungkan chatbot dengan materi yang benar-benar tersedia dalam kelas siswa agar jawabannya sesuai konteks pembelajaran.
+
+### 4.3 Asisten AI yang dapat dipindahkan
+
+Perbaiki tampilan AI Assistant di frontend agar:
+
+- Dapat digeser atau dipindahkan oleh siswa.
+- Tidak menghalangi materi, tombol, atau navigasi penting.
+- Dapat dibuka dan ditutup.
+- Tetap nyaman digunakan di desktop maupun perangkat seluler.
+- Memiliki posisi awal yang konsisten dan tidak menutupi elemen penting.
+- Tidak kehilangan fungsi percakapan ketika posisinya berubah.
+
+Jika memungkinkan, sediakan tombol untuk mengembalikan asisten ke posisi awal.
+
+### 4.4 Pengamanan integrasi AI
+
+- Jangan menampilkan API key di frontend, source code publik, log pengguna, atau database yang dapat diakses tanpa izin.
+- Simpan rahasia di environment variables atau secret manager yang sesuai.
+- Jalankan permintaan sensitif melalui backend.
+- Terapkan autentikasi, pembatasan penggunaan, dan penanganan kegagalan API.
+- Tampilkan pesan yang informatif jika layanan AI tidak tersedia.
+
+## 5. SISTEM NILAI, GRADEBOOK, DAN REKOMENDASI AI
+
+### 5.1 Pengelolaan nilai oleh guru
+
+Guru harus memiliki kendali penuh terhadap nilai akhir siswa.
+
+- Guru dapat memasukkan dan mengubah nilai.
+- Guru dapat menerima, menolak, atau mengedit rekomendasi nilai yang dihasilkan AI.
+- Rekomendasi AI tidak boleh otomatis menggantikan nilai final guru.
+- Simpan nilai akhir, status penilaian, waktu perubahan, dan identitas pihak yang melakukan perubahan.
+- Berikan validasi terhadap rentang nilai sesuai konfigurasi penilaian.
+- Pastikan hanya pihak yang berwenang yang dapat mengubah nilai.
+
+### 5.2 Gradebook siswa
+
+Pada halaman Gradebook siswa:
+
+- Tampilkan hanya nilai akhir yang telah ditetapkan atau dipublikasikan oleh guru.
+- Jangan menampilkan nilai rekomendasi AI, skor internal AI, atau hasil perhitungan sementara yang belum disahkan guru.
+- Tampilkan status penilaian dengan jelas, misalnya belum dinilai atau sudah dinilai.
+- Sediakan ringkasan nilai dan progres belajar yang relevan.
+- Hapus fitur ekspor Excel dari Gradebook siswa.
+- Jangan mengizinkan siswa melihat nilai siswa lain tanpa izin yang sah.
+
+### 5.3 Konsistensi nilai
+
+Pastikan perubahan nilai dari guru tersimpan di database dan ditampilkan pada Gradebook siswa yang sesuai.
+
+Perubahan harus mengikuti aturan publikasi nilai. Jika guru belum memublikasikan nilai, siswa tidak boleh melihatnya sebagai nilai akhir.
+
+## 6. KALENDER AKADEMIK DAN AGENDA
+
+Sempurnakan kalender akademik agar lebih visual, interaktif, dan benar-benar dapat digunakan.
+
+### 6.1 Tampilan kalender
+
+- Sediakan tampilan bulanan yang menampilkan susunan tanggal secara jelas.
+- Jika sesuai dengan desain yang ada, tambahkan tampilan mingguan dan agenda.
+- Berikan penanda visual untuk tanggal yang memiliki kegiatan.
+- Gunakan warna atau label berbeda untuk kategori kegiatan, seperti tugas, kuis, ujian, pertemuan, dan kegiatan akademik.
+- Sediakan navigasi bulan sebelumnya, bulan berikutnya, dan kembali ke tanggal hari ini.
+- Pastikan tampilan tetap rapi di desktop dan perangkat seluler.
+
+### 6.2 Agenda setiap tanggal
+
+Pengguna yang berwenang harus dapat membuka tanggal tertentu dan menambahkan agenda dengan informasi seperti:
+
+- Judul kegiatan.
+- Deskripsi.
+- Tanggal.
+- Waktu mulai dan selesai.
+- Kategori kegiatan.
+- Kelas terkait.
+- Tenggat waktu jika relevan.
+
+Guru dapat mengelola agenda kelasnya. Siswa dapat melihat agenda yang relevan dengan kelas dan aktivitasnya. Admin dapat mengelola kegiatan institusional sesuai kewenangan.
+
+### 6.3 Sinkronisasi kalender
+
+- Simpan agenda ke database.
+- Perubahan harus muncul pada pengguna yang terkait tanpa perlu memuat ulang halaman secara manual, menggunakan mekanisme real-time atau pembaruan data yang sesuai.
+- Hubungkan kalender dengan tugas dan kuis jika memungkinkan.
+- Hindari agenda ganda dan perbedaan tanggal akibat pengaturan zona waktu.
+- Terapkan hak akses pada proses membuat, mengubah, dan menghapus agenda.
+
+## 7. MANAJEMEN MATERI DAN MEDIA AJAR
+
+Buat atau sempurnakan bagian **Media Ajar** yang terhubung dengan pengelolaan kelas.
+
+### 7.1 Jenis media yang didukung
+
+Guru harus dapat menambahkan media ajar berupa:
+
+- Video yang diunggah atau disematkan dari layanan yang didukung.
+- Audio.
+- Gambar.
+- Dokumen PDF.
+- Dokumen pendukung lain yang formatnya diizinkan.
+- Tautan sumber belajar eksternal.
+- Konten interaktif, termasuk H5P atau format serupa jika kompatibel dengan teknologi aplikasi.
+
+Jangan mengklaim seluruh format interaktif sudah didukung sebelum integrasinya benar-benar berfungsi.
+
+### 7.2 Formulir media ajar
+
+Sediakan kolom yang sesuai, seperti:
+
+- Judul media.
+- Deskripsi.
+- Mata pelajaran atau topik.
+- Kelas terkait.
+- Jenis media.
+- File atau tautan sumber.
+- Urutan penyajian.
+- Status draf atau dipublikasikan.
+
+### 7.3 Pengelolaan media
+
+Guru dapat:
+
+- Menambah media ajar.
+- Mengedit informasi media.
+- Mengganti file atau tautan.
+- Mengatur urutan media.
+- Menyimpan sebagai draf.
+- Memublikasikan media.
+- Mengarsipkan atau menghapus media sesuai hak akses.
+
+Siswa hanya dapat melihat media yang dipublikasikan dan memang ditujukan untuk kelasnya.
+
+### 7.4 Pengalaman siswa
+
+- Sediakan pratinjau yang sesuai untuk setiap format.
+- Video dapat diputar melalui pemutar atau penyematan yang didukung.
+- Audio dapat diputar langsung.
+- Gambar dapat diperbesar jika diperlukan.
+- PDF dapat dibaca melalui pratinjau jika didukung atau diunduh dengan aman.
+- Tautan eksternal dapat dibuka dengan jelas dan aman.
+
+Pastikan konten media ajar tidak hanya tersimpan di frontend, tetapi tercatat dalam database dan terhubung dengan kelas yang benar.
+
+## 8. PEMBUATAN KUIS DAN AKTIVITAS PEMBELAJARAN
+
+Guru harus dapat membuat kuis langsung dari aplikasi tanpa harus menggunakan sistem eksternal.
+
+### 8.1 Jenis pertanyaan
+
+Dukung jenis pertanyaan berikut sesuai kemampuan sistem:
+
+- Pilihan ganda.
+- Benar atau salah.
+- Jawaban singkat.
+- Jawaban numerik.
+- Esai.
+
+Jika ada jenis pertanyaan yang memerlukan penilaian manual, sediakan mekanisme pemeriksaan oleh guru.
+
+### 8.2 Pengaturan kuis
+
+Guru dapat mengatur:
+
+- Judul kuis.
+- Deskripsi atau petunjuk.
+- Kelas dan topik terkait.
+- Daftar pertanyaan.
+- Bobot atau skor setiap pertanyaan.
+- Durasi pengerjaan jika digunakan.
+- Jadwal pembukaan dan tenggat waktu.
+- Batas percobaan jika diperlukan.
+- Status draf atau dipublikasikan.
+
+### 8.3 Pengelolaan kuis
+
+Guru dapat:
+
+- Menambah, mengedit, dan menghapus pertanyaan.
+- Mengatur urutan pertanyaan.
+- Melihat pratinjau kuis.
+- Menyimpan kuis sebagai draf.
+- Memublikasikan kuis.
+- Melihat pengumpulan dan hasil pengerjaan siswa.
+
+### 8.4 Pengerjaan kuis oleh siswa
+
+- Siswa hanya dapat mengakses kuis yang sesuai dengan kelas dan jadwalnya.
+- Jawaban harus tersimpan ke database.
+- Sediakan validasi jawaban dan penanganan gangguan koneksi.
+- Hindari pengiriman ganda yang menghasilkan percobaan atau nilai duplikat.
+- Tampilkan status pengerjaan secara jelas.
+- Terapkan aturan batas waktu dan percobaan pada backend.
+- Jangan membuka kunci jawaban sebelum waktu yang diizinkan guru.
+- Simpan hasil pengerjaan dan status penilaian dengan benar.
+
+### 8.5 Penilaian kuis
+
+- Penilaian otomatis dapat digunakan untuk pertanyaan objektif.
+- Jawaban esai atau pertanyaan yang membutuhkan pertimbangan harus dapat diperiksa guru.
+- AI boleh memberikan rekomendasi penilaian jika tersedia, tetapi guru tetap memiliki kendali atas nilai final.
+- Nilai yang belum disahkan tidak boleh ditampilkan sebagai nilai akhir siswa.
+
+## 9. UNGGAH FILE PDF DAN DOKUMEN
+
+Perbaiki fitur unggah file agar guru dapat memilih file langsung dari perangkatnya tanpa harus mengunggah file ke situs lain terlebih dahulu.
+
+### 9.1 Fungsi unggah
+
+- Sediakan tombol pilih file dan, jika sesuai, fitur drag-and-drop.
+- Tampilkan nama file, ukuran, status unggah, dan pesan kesalahan.
+- Berikan indikator proses unggah.
+- Berikan pilihan mengganti atau menghapus file sesuai hak akses.
+- Pastikan file dapat diakses kembali setelah pengguna keluar dan login kembali.
+
+### 9.2 Penyimpanan file
+
+- Simpan file menggunakan layanan penyimpanan yang sesuai dengan arsitektur aplikasi.
+- Simpan metadata file di database, termasuk nama, lokasi penyimpanan, ukuran, tipe file, pemilik, dan relasi kelas atau materi.
+- Jangan menyimpan file besar sebagai base64 di database atau hanya di local storage browser.
+- Jangan menganggap file berhasil diunggah jika hanya nama file yang tersimpan.
+- Pastikan file yang diunggah benar-benar tersedia dan dapat diakses melalui mekanisme yang aman.
+
+### 9.3 Validasi dan keamanan
+
+- Validasi jenis file, MIME type, ukuran, dan hak akses.
+- Batasi format file berdasarkan kebutuhan aplikasi.
+- Cegah akses tanpa izin terhadap file kelas lain.
+- Gunakan URL bertanda tangan atau mekanisme akses privat bila didukung layanan penyimpanan.
+- Tampilkan pesan yang jelas ketika unggah atau unduh gagal.
+- Jangan menampilkan kredensial penyimpanan kepada pengguna.
+
+Fitur unggah langsung dan tautan eksternal boleh tersedia bersamaan, tetapi keduanya harus dibedakan dengan jelas.
+
+## 10. NOTIFIKASI GLOBAL DAN NOTIFIKASI AKTIVITAS
+
+Bangun sistem notifikasi yang konsisten untuk seluruh halaman aplikasi.
+
+### 10.1 Notifikasi otomatis
+
+Gunakan notifikasi berupa toast atau komponen sejenis untuk memberi tahu pengguna tentang:
+
+- Data berhasil disimpan.
+- Data berhasil diperbarui.
+- Data berhasil dihapus.
+- File berhasil diunggah.
+- Terjadi kesalahan validasi.
+- Pengguna tidak memiliki izin.
+- Koneksi atau layanan mengalami gangguan.
+- Tugas atau kuis berhasil dikirim.
+- Nilai telah dipublikasikan.
+- Perubahan agenda atau materi yang relevan.
+
+### 10.2 Tampilan notifikasi
+
+- Notifikasi muncul pada posisi yang konsisten, misalnya kanan atas.
+- Bedakan kategori sukses, kesalahan, peringatan, dan informasi.
+- Sediakan tombol tutup.
+- Notifikasi dapat hilang otomatis setelah durasi yang sesuai.
+- Notifikasi penting tidak boleh hilang terlalu cepat.
+- Beberapa notifikasi harus ditangani melalui antrean agar tidak menumpuk secara berlebihan.
+- Pastikan tampilan responsif dan dapat diakses dengan baik.
+
+### 10.3 Integrasi dengan proses nyata
+
+Notifikasi harus muncul berdasarkan hasil operasi yang sebenarnya, bukan hanya karena tombol diklik.
+
+Contoh: notifikasi “File berhasil diunggah” hanya muncul setelah proses penyimpanan berhasil dikonfirmasi.
+
+Jika diperlukan, buat pusat notifikasi atau riwayat notifikasi untuk aktivitas penting. Terapkan pembatasan agar pengguna hanya menerima informasi yang relevan dan tidak dapat membaca notifikasi milik pengguna lain.
+
+### 10.4 Notifikasi real-time
+
+Jika sistem mendukung real-time, tampilkan pembaruan yang relevan tanpa mengharuskan pengguna memuat ulang halaman. Jika layanan real-time belum tersedia, gunakan mekanisme pembaruan yang aman dan sesuai dengan arsitektur aplikasi.
+
+## 11. DATABASE, SINKRONISASI REAL-TIME, DAN KONSISTENSI DATA
+
+Pastikan seluruh fitur menggunakan sumber data yang konsisten.
+
+### 11.1 Sumber data
+
+Periksa dan tetapkan sumber data yang benar untuk:
+
+- Pengguna dan peran.
+- Kelas dan keanggotaan kelas.
+- Materi dan media ajar.
+- Tugas dan pengumpulan.
+- Kuis dan jawaban.
+- Nilai dan status publikasi.
+- Kalender dan agenda.
+- Notifikasi.
+- Riwayat aktivitas yang diperlukan.
+- Metadata file.
+
+Hindari duplikasi data yang tidak diperlukan dan relasi data yang tidak konsisten.
+
+### 11.2 Sinkronisasi perubahan
+
+Jika guru atau admin menambahkan, mengubah, memublikasikan, atau menghapus data, perubahan harus tercermin pada tampilan pengguna yang terdampak.
+
+Contoh:
+
+- Guru memublikasikan materi, lalu siswa di kelas terkait dapat melihat materi tersebut.
+- Guru menambahkan kuis, lalu kuis muncul pada halaman siswa yang berhak mengaksesnya.
+- Guru memperbarui nilai, lalu Gradebook siswa mengikuti status publikasi nilai.
+- Guru mengubah agenda, lalu kalender siswa diperbarui.
+- Guru mengunggah PDF, lalu file tersedia sesuai hak aksesnya.
+
+Gunakan WebSocket, layanan real-time database, event subscription, invalidasi cache, atau mekanisme lain yang sesuai dengan teknologi yang sudah digunakan.
+
+**Jangan mewajibkan pengguna memuat ulang halaman secara manual untuk melihat perubahan yang seharusnya disinkronkan otomatis.**
+
+### 11.3 Pengelolaan API key dan data sensitif
+
+Jika terdapat bagian pengelolaan kursus yang menampilkan konfigurasi API atau informasi database guru dan siswa, audit fungsi tersebut.
+
+- Jangan tampilkan API key secara terbuka.
+- Jangan menaruh kredensial di frontend.
+- Batasi akses terhadap konfigurasi sensitif berdasarkan peran.
+- Admin tidak otomatis memperoleh akses ke semua rahasia teknis hanya karena berstatus admin aplikasi.
+- Informasi database harus ditampilkan sesuai kebutuhan operasional dan kewenangan.
+- Gunakan secret manager atau environment variables untuk rahasia sistem.
+- Jangan mengirim data siswa yang tidak diperlukan ke layanan eksternal.
+- Terapkan pencatatan aktivitas penting tanpa merekam kata sandi, token, atau rahasia.
+
+Pastikan data guru dan siswa yang dikelola pada halaman terkait benar-benar berasal dari database yang digunakan aplikasi, bukan salinan lokal yang tidak sinkron.
+
+## 12. FITUR BILINGUAL: BAHASA INDONESIA DAN INGGRIS
+
+Sempurnakan sistem bilingual agar seluruh antarmuka dapat beralih secara konsisten antara Bahasa Indonesia dan Bahasa Inggris.
+
+### 12.1 Cakupan terjemahan
+
+Periksa seluruh bagian aplikasi, termasuk:
+
+- Login dan registrasi.
+- Dashboard.
+- Sidebar dan navigasi.
+- Tombol dan formulir.
+- Label input dan placeholder.
+- Pesan validasi.
+- Notifikasi sukses dan kesalahan.
+- Kalender dan agenda.
+- Kelas, materi, media ajar, tugas, dan kuis.
+- Gradebook.
+- Pengaturan akun.
+- Dialog konfirmasi.
+- Pesan kosong dan loading.
+- Halaman error.
+- Komponen AI Assistant dan chatbot.
+- Menu admin, guru, dan siswa.
+
+### 12.2 Implementasi bahasa
+
+- Gunakan sistem internasionalisasi atau kamus terjemahan terpusat.
+- Hindari menulis teks antarmuka secara langsung di banyak komponen.
+- Pastikan tombol pergantian bahasa mengubah seluruh teks antarmuka yang didukung.
+- Pertahankan pilihan bahasa pengguna sesuai kemampuan sistem.
+- Gunakan format tanggal, waktu, dan angka yang sesuai.
+- Jangan menerjemahkan data yang ditulis pengguna secara otomatis jika tidak diperlukan.
+- Konten pembelajaran dapat memiliki bahasa tersendiri sesuai materi dan tidak harus dipaksa mengikuti bahasa antarmuka.
+
+Lakukan audit khusus untuk menemukan teks Bahasa Indonesia yang masih muncul ketika pengguna memilih Bahasa Inggris.
+
+## 13. DESAIN UI/UX, RESPONSIVITAS, DAN AKSESIBILITAS
+
+Pertahankan identitas desain aplikasi yang sudah ada sambil memperbaiki masalah pengalaman pengguna.
+
+### 13.1 Konsistensi desain
+
+- Gunakan sistem warna, tipografi, jarak, ukuran tombol, radius, ikon, dan komponen yang konsisten.
+- Hindari perubahan visual yang tidak diperlukan.
+- Pastikan hierarki informasi mudah dipahami.
+- Gunakan komponen bersama untuk elemen yang memiliki fungsi serupa.
+- Hindari pengulangan komponen yang dapat menyebabkan perilaku berbeda.
+
+### 13.2 Responsivitas
+
+Pastikan aplikasi berfungsi pada:
+
+- Desktop.
+- Laptop.
+- Tablet.
+- Ponsel dengan ukuran layar berbeda.
+
+Periksa sidebar, navigasi, tabel, formulir, kalender, media ajar, Gradebook, kuis, notifikasi, dan AI Assistant agar tidak terpotong atau saling menutupi.
+
+### 13.3 Pengalaman pengguna
+
+- Tambahkan indikator loading ketika data sedang diproses.
+- Sediakan tampilan kosong yang informatif jika belum ada data.
+- Berikan pesan kesalahan yang jelas dan dapat ditindaklanjuti.
+- Gunakan dialog konfirmasi untuk tindakan penting seperti menghapus data.
+- Hindari tombol yang tidak melakukan apa pun.
+- Hindari tautan yang mengarah ke halaman kosong.
+- Pastikan navigasi dan tombol kembali bekerja secara konsisten.
+
+### 13.4 Aksesibilitas
+
+- Pastikan kontras teks memadai.
+- Sediakan label yang jelas pada input dan tombol.
+- Pastikan elemen interaktif dapat dioperasikan dengan keyboard jika memungkinkan.
+- Berikan indikator fokus.
+- Jangan menyampaikan status hanya melalui warna.
+- Gunakan struktur halaman yang semantik dan mudah dipahami teknologi bantu.
+
+## 14. KEAMANAN, VALIDASI, DAN KEANDALAN
+
+Lakukan pemeriksaan keamanan pada seluruh fitur yang diperbaiki.
+
+- Validasi data di frontend dan backend.
+- Terapkan pemeriksaan hak akses pada setiap operasi penting.
+- Lindungi halaman dan endpoint berdasarkan sesi serta peran.
+- Cegah akses langsung ke data kelas lain hanya dengan mengubah ID pada URL atau permintaan API.
+- Terapkan perlindungan terhadap SQL injection, XSS, CSRF, dan kerentanan lain yang relevan dengan arsitektur aplikasi.
+- Gunakan query terparameterisasi atau ORM yang aman.
+- Hindari menyimpan kata sandi dalam bentuk teks biasa.
+- Jangan memasukkan kredensial ke dalam source code publik.
+- Tangani error tanpa membocorkan detail internal sistem.
+- Pastikan proses penyimpanan data tidak menghasilkan duplikasi ketika permintaan dikirim ulang.
+- Terapkan pencatatan perubahan penting untuk nilai dan data administratif.
+- Jika database mendukung transaksi, gunakan transaksi untuk operasi yang harus konsisten.
+- Jangan menghapus atau mengubah data produksi selama proses pengujian tanpa izin dan mekanisme pengamanan yang tepat.
+
+## 15. PENGELOLAAN STATUS DATA DAN SIKLUS PUBLIKASI
+
+Gunakan status yang jelas untuk objek pembelajaran yang memerlukannya, misalnya:
+
+- Draf.
+- Dipublikasikan.
+- Diarsipkan.
+- Ditutup atau kedaluwarsa jika relevan.
+
+Terapkan aturan yang konsisten untuk materi, media ajar, tugas, kuis, agenda, dan nilai.
+
+Pastikan perubahan status memiliki dampak yang benar pada tampilan guru dan siswa. Data draf tidak boleh muncul sebagai konten publik bagi siswa. Data yang diarsipkan tidak boleh menghilang secara tidak sengaja apabila masih dibutuhkan untuk riwayat atau pelaporan.
+
+Sediakan mekanisme penghapusan yang aman dan pertimbangkan relasi data agar penghapusan satu objek tidak merusak data lain yang masih dibutuhkan.
+
+## 16. PENGUJIAN WAJIB SEBELUM MENYATAKAN SELESAI
+
+Setelah implementasi, lakukan pengujian menyeluruh pada aplikasi.
+
+### 16.1 Pengujian autentikasi dan hak akses
+
+- Login email dan kata sandi.
+- Login Google setelah konfigurasi tersedia.
+- Logout dan sesi pengguna.
+- Akses halaman sesuai peran.
+- Pencegahan akses tanpa izin.
+- Pengelolaan akun dan relasi kelas.
+
+### 16.2 Pengujian AI
+
+- AI Scaffolding hanya tersedia bagi siswa.
+- Chatbot dapat merespons pertanyaan.
+- Asisten AI dapat dipindahkan dan tetap berfungsi.
+- API key tidak terekspos.
+- Kegagalan layanan ditangani dengan benar.
+
+### 16.3 Pengujian nilai
+
+- Guru dapat mengubah nilai.
+- Rekomendasi AI dapat diterima, ditolak, atau diedit.
+- Nilai akhir tersimpan di database.
+- Siswa hanya melihat nilai yang telah dipublikasikan.
+- Nilai AI tidak muncul sebagai nilai final.
+- Ekspor Excel tidak tersedia pada Gradebook siswa.
+
+### 16.4 Pengujian kalender
+
+- Tampilan kalender benar.
+- Agenda dapat dibuat, diedit, dan dihapus sesuai izin.
+- Agenda tersimpan di database.
+- Perubahan agenda tersinkronisasi.
+- Tanggal dan zona waktu konsisten.
+
+### 16.5 Pengujian kuis dan media ajar
+
+- Guru dapat membuat, mengedit, dan memublikasikan kuis.
+- Siswa dapat mengerjakan kuis yang menjadi haknya.
+- Jawaban tersimpan dengan benar.
+- Penilaian otomatis dan manual bekerja sesuai jenis pertanyaan.
+- Guru dapat mengunggah PDF langsung dari perangkat.
+- PDF dapat dibuka atau diunduh sesuai izin.
+- Video, audio, gambar, dokumen, dan tautan media berfungsi sesuai format yang didukung.
+- Perubahan materi dan kuis muncul pada tampilan siswa.
+
+### 16.6 Pengujian notifikasi dan bilingual
+
+- Notifikasi hanya muncul setelah proses nyata berhasil atau gagal.
+- Notifikasi tidak menumpuk secara berlebihan.
+- Pembaruan yang relevan muncul tanpa refresh manual jika real-time tersedia.
+- Semua teks antarmuka mengikuti pilihan bahasa.
+- Tidak ada teks antarmuka yang tertinggal dalam bahasa lain tanpa alasan yang disengaja.
+
+### 16.7 Pengujian teknis
+
+- Tidak ada error kritis pada console.
+- Tidak ada endpoint utama yang gagal.
+- Tidak ada tautan atau tombol utama yang rusak.
+- Tidak ada kehilangan data setelah halaman dimuat ulang atau pengguna login kembali.
+- Tidak ada masalah responsivitas yang menghambat penggunaan.
+- Tidak ada kebocoran data antarpengguna.
+- Tidak ada kredensial atau API key yang terekspos.
+
+Jika pengujian otomatis tersedia, tambahkan atau perbaiki unit test, integration test, dan end-to-end test sesuai kebutuhan. Jika pengujian otomatis tidak tersedia, lakukan pengujian manual yang terstruktur dan laporkan hasilnya.
+
+## 17. URUTAN PRIORITAS IMPLEMENTASI
+
+Kerjakan perbaikan dengan urutan berikut agar perubahan lebih aman dan terarah.
+
+**Prioritas 1 — Fondasi aplikasi**
+- Audit proyek.
+- Autentikasi dan pembagian hak akses.
+- Struktur database dan sinkronisasi.
+- Keamanan API key dan data sensitif.
+- Perbaikan error yang menghambat aplikasi.
+
+**Prioritas 2 — Fitur pembelajaran inti**
+- Pembuatan dan pengerjaan kuis.
+- Unggah PDF langsung.
+- Pengelolaan materi dan Media Ajar.
+- Pengumpulan tugas dan penyimpanan data.
+- Sistem nilai dan Gradebook.
+
+**Prioritas 3 — Pengalaman pembelajaran**
+- AI Scaffolding dan chatbot siswa.
+- AI Assistant yang dapat dipindahkan.
+- Kalender akademik dan agenda.
+- Notifikasi global dan pembaruan real-time.
+
+**Prioritas 4 — Penyempurnaan aplikasi**
+- Bilingual secara menyeluruh.
+- Responsivitas dan aksesibilitas.
+- Konsistensi UI/UX.
+- Pengujian regresi dan perbaikan bug.
+
+Jika ada ketergantungan teknis yang mengharuskan perubahan urutan, sesuaikan dengan kebutuhan dan jelaskan alasannya.
+
+## 18. ATURAN IMPLEMENTASI AGAR TIDAK MERUSAK PROYEK
+
+Selama proses revisi:
+
+1. Periksa file dan komponen yang sudah tersedia sebelum membuat file baru.
+2. Gunakan kembali fungsi, komponen, dan skema database yang masih sesuai.
+3. Hindari mengganti seluruh struktur proyek tanpa kebutuhan teknis yang kuat.
+4. Jangan menghapus fitur yang sudah berjalan hanya untuk mempermudah implementasi.
+5. Hindari membuat dua sistem autentikasi, dua sumber data, atau dua komponen notifikasi yang saling bertentangan.
+6. Jangan mengganti database atau framework tanpa alasan yang jelas.
+7. Jangan mengubah nama field atau struktur database secara sembarangan.
+8. Jika migrasi database diperlukan, buat migrasi yang aman dan pertimbangkan data yang sudah tersimpan.
+9. Jika ada konfigurasi yang belum tersedia, jangan membuat nilai rahasia palsu atau berpura-pura integrasi berhasil.
+10. Jika layanan eksternal belum dikonfigurasi, implementasikan bagian yang memungkinkan dan jelaskan langkah konfigurasi yang tersisa.
+11. Setelah memperbaiki satu bagian, periksa fitur terkait agar tidak terjadi regresi.
+12. Jangan berhenti setelah membuat rencana, daftar fitur, atau mockup. Lanjutkan hingga implementasi yang memungkinkan selesai.
+13. Jangan menyatakan semua fitur selesai apabila ada bagian yang masih berupa placeholder, belum terhubung dengan database, atau belum diuji.
+
+## 19. LAPORAN HASIL AKHIR
+
+Setelah revisi, berikan laporan yang mencakup:
+
+1. Ringkasan kondisi aplikasi sebelum revisi.
+2. Daftar fitur yang berhasil diperbaiki.
+3. Daftar fitur baru yang berhasil diimplementasikan.
+4. File atau komponen utama yang diubah.
+5. Perubahan database atau migrasi yang dilakukan.
+6. Integrasi eksternal yang ditambahkan atau diperbaiki.
+7. Hasil pengujian setiap fitur.
+8. Bug yang ditemukan dan status perbaikannya.
+9. Fitur yang belum selesai beserta alasan dan hambatannya.
+10. Konfigurasi yang masih harus dilakukan secara manual, termasuk OAuth, penyimpanan file, atau API.
+11. Risiko teknis yang masih perlu diperhatikan.
+12. Langkah berikutnya untuk menjalankan dan memelihara aplikasi.
+
+Gunakan status yang jelas untuk setiap fitur:
+
+- **Selesai dan teruji:** implementasi tersedia dan pengujian berhasil.
+- **Selesai sebagian:** sebagian fungsi sudah bekerja, tetapi masih ada keterbatasan.
+- **Belum selesai:** implementasi belum lengkap.
+- **Terhambat konfigurasi:** memerlukan kredensial atau pengaturan eksternal.
+- **Gagal diuji:** pengujian tidak berhasil atau belum dapat diselesaikan.
+
+## INSTRUKSI PENUTUP
+
+Mulai dengan mengaudit proyek yang sedang terbuka. Identifikasi teknologi, struktur, fitur yang sudah ada, dan masalah utama. Setelah itu, langsung lakukan revisi secara bertahap sesuai prioritas.
+
+**Tujuan akhir bukan sekadar membuat aplikasi terlihat lengkap, melainkan memastikan setiap fitur yang tersedia benar-benar dapat digunakan, menyimpan data dengan benar, memiliki hak akses yang tepat, tersinkronisasi dengan pengguna terkait, dan tidak merusak fitur yang sebelumnya sudah berjalan.**
+
+Pertahankan desain aplikasi saat ini sebisa mungkin. Jangan mengarang hasil pengujian. Jangan mengganti fitur nyata dengan simulasi. Jika terdapat keterbatasan platform, jelaskan secara spesifik dan berikan implementasi terbaik yang benar-benar dapat dijalankan.

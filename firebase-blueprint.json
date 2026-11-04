@@ -1,0 +1,93 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile in Cakrawala LMS",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["admin", "guru", "siswa", "walikelas"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "name", "email", "role"]
+    },
+    "Course": {
+      "title": "Course",
+      "description": "Course in Cakrawala LMS",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "subject": { "type": "string" },
+        "teacherId": { "type": "string" }
+      },
+      "required": ["id", "title", "subject", "teacherId"]
+    },
+    "Assignment": {
+      "title": "Assignment",
+      "description": "Exam or assignment in Cakrawala LMS",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "courseId": { "type": "string" },
+        "title": { "type": "string" },
+        "durationMinutes": { "type": "number" },
+        "maxViolations": { "type": "number" },
+        "sebMode": { "type": "boolean" }
+      },
+      "required": ["id", "courseId", "title"]
+    },
+    "Submission": {
+      "title": "Submission",
+      "description": "Student exam or assignment submission",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "assignmentId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "studentName": { "type": "string" },
+        "submittedAt": { "type": "string" },
+        "finalScore": { "type": "number" },
+        "status": { "type": "string", "enum": ["submitted", "graded", "approved"] }
+      },
+      "required": ["id", "assignmentId", "studentId", "submittedAt"]
+    },
+    "ExamLock": {
+      "title": "ExamLock",
+      "description": "Safe Exam Browser lock state for a student on an assignment",
+      "type": "object",
+      "properties": {
+        "assignmentId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "isLocked": { "type": "boolean" },
+        "lockedReason": { "type": "string" },
+        "unlockedBy": { "type": "string" }
+      },
+      "required": ["assignmentId", "studentId", "isLocked"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profile records"
+    },
+    "/courses/{courseId}": {
+      "schema": { "$ref": "#/entities/Course" },
+      "description": "Course information"
+    },
+    "/assignments/{assignmentId}": {
+      "schema": { "$ref": "#/entities/Assignment" },
+      "description": "Assignments and examinations"
+    },
+    "/submissions/{submissionId}": {
+      "schema": { "$ref": "#/entities/Submission" },
+      "description": "Student exam submissions"
+    },
+    "/examLocks/{lockId}": {
+      "schema": { "$ref": "#/entities/ExamLock" },
+      "description": "Safe Exam Browser lock states"
+    }
+  }
+}

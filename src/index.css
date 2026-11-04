@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+:root {
+  --lms-blue: #1d4ed8;
+  --lms-blue-hover: #1e40af;
+  --lms-blue-light: #eff6ff;
+  --lms-blue-subtle: #dbeafe;
+  --lms-accent: #0284c7;
+  --lms-bg: #f8fafc;
+  --lms-card-bg: #ffffff;
+  --lms-border: #e2e8f0;
+  --lms-text: #0f172a;
+  --lms-text-muted: #64748b;
+}
+
+body {
+  background-color: var(--lms-bg);
+  color: var(--lms-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+

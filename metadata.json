@@ -1,0 +1,11 @@
+{
+  "name": "Remix Cakrawala LMS 3.6",
+  "description": "LMS modern terpadu dengan koreksi AI cerdas, Safe Exam Browser, dan manajemen nilai komprehensif.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
